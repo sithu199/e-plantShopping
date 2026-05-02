@@ -7,7 +7,7 @@ const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-  // Total Amount တွက်ချက်ရန် (ပစ္စည်းအားလုံး၏ စုစုပေါင်းတန်ဖိုး)
+  // Total Amount တွက်ချက်ရန်
   const calculateTotalAmount = () => {
     return cart.reduce((total, item) => {
       const numericCost = parseFloat(item.cost.replace('$', ''));
@@ -31,10 +31,15 @@ const CartItem = ({ onContinueShopping }) => {
     dispatch(removeItem(item.name));
   };
 
-  // ပစ္စည်းတစ်ခုချင်းစီ၏ စုစုပေါင်းတန်ဖိုး (Unit Price * Quantity)
   const calculateTotalCost = (item) => {
     const numericCost = parseFloat(item.cost.replace('$', ''));
     return (numericCost * item.quantity).toFixed(2);
+  };
+
+  // Feedback အရ Checkout functionality ကို အနည်းငယ် ပိုကောင်းအောင် လုပ်ထားပါသည်
+  const handleCheckout = () => {
+    alert('Thank you for your purchase! Our nursery will process your order soon.');
+    // ဤနေရာတွင် cart ကို clear လုပ်သည့် logic ထည့်နိုင်သည်
   };
 
   return (
@@ -58,10 +63,16 @@ const CartItem = ({ onContinueShopping }) => {
           </div>
         ))}
       </div>
+      
       <div style={{ marginTop: '20px' }} className='continue_shopping_btn'>
-        <button className="get-started-btn" onClick={onContinueShopping}>Continue Shopping</button>
+        {/* Feedback အရ Continue Shopping သည် Product page သို့ ပြန်သွားရပါမည် */}
+        <button className="get-started-btn" onClick={onContinueShopping}>
+          Continue Shopping
+        </button>
         <br />
-        <button className="get-started-btn" onClick={() => alert('Functionality to be added for future reference')}>Checkout</button>
+        <button className="get-started-btn" onClick={handleCheckout}>
+          Checkout
+        </button>
       </div>
     </div>
   );
